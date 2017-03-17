@@ -2,32 +2,32 @@ import {Router, Application} from 'express';
 
 import userRoutes from './user';
 
-interface CustomRoute {
-  method: string,
-  path: string,
-  handler(): void,
-  bindTo(): void,
-  middlewares?: Array<object>
+interface IRoute {
+  method: string;
+  path: string;
+  middlewares?: Array<object>;
+  handler();
+  bindTo();
 }
 
 class ApiRouter {
   private express: Application;
 
   constructor(express) {
-    this.express = express;
-    this.init();
+    express.use('/user', this.createRouter(userRoutes));
   }
 
-  private init(): void {
-    this.express.use('/', this.createRouter(userRoutes));
-  }
-
-  private createRouter(routes): Router {
-    return routes.reduce((router: Router, route: CustomRoute) => {
-      return router[route.method](route.path, [
-        ...(route.middlewares || []),
-        route.handler.bind(route.bindTo)
-        ]);
+  private createRouter(routes, auth: boolean = true): Router {
+    const defaultMiddlewares = auth ? [] : [];
+    return routes.reduce((router: Router, route: IRoute) => {
+      return router[route.method](
+        route.path,
+        [
+          ...defaultMiddlewares,
+          ...(route.middlewares || []),
+          route.handler.bind(route.bindTo)
+        ]
+      );
     }, Router());
   }
 }

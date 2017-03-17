@@ -1,11 +1,23 @@
-class UserService {
+import * as Promise from 'bluebird';
+import {Model} from 'mongoose';
+import {IUser} from '../../models/schemas/user';
 
-  constructor() {
-    console.log('init UserService');
+class UserService {
+  private userModel: Model<IUser>;
+
+  constructor(userModel: Model<IUser>) {
+    this.userModel = userModel;
   }
 
-  public get(): Promise<object> {
-    return Promise.resolve({test: 'ok!'});
+  public get(): Promise<IUser[]> {
+    const query = this.userModel.find({});
+    return Promise.resolve(query.exec());
+  }
+
+  public getAllUsers(): Promise<object> {
+    return Promise.resolve({
+      test: 'ok!'
+    });
   }
 }
 

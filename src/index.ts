@@ -1,7 +1,12 @@
 import * as http from 'http';
 import * as debug from 'debug';
+import * as mongoose from 'mongoose';
 
 import App from './App';
+
+import models from './models';
+
+models.connect('mongodb://localhost:27017}/test');
 
 debug('ts-express:server');
 

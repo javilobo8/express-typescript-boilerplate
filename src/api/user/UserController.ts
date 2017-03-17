@@ -13,6 +13,11 @@ class UserController {
     Promise.resolve(this.userService.get())
       .then(res.send.bind(res));
   }
+
+  public getAllUsers(req: Request, res: Response) {
+    Promise.resolve(this.userService.getAllUsers())
+      .then(res.send.bind(res));
+  }
 }
 
 export default UserController;
