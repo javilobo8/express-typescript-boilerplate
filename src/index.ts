@@ -2,18 +2,14 @@ import * as http from 'http';
 import * as debug from 'debug';
 import * as mongoose from 'mongoose';
 
-import App from './App';
-
-import models from './models';
-
-models.connect('mongodb://localhost:27017}/test');
+import app from './server';
 
 debug('ts-express:server');
 
 const PORT = normalizePort(process.env.PORT || 3000);
-App.set('port', PORT);
+app.set('port', PORT);
 
-const server = http.createServer(App);
+const server = http.createServer(app);
 server.listen(PORT);
 server.on('error', onError);
 server.on('listening', onListening);
