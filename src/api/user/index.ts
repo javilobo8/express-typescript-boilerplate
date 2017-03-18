@@ -18,8 +18,8 @@ class UserRouter {
       bindTo: this.userController
     }, {
       method: 'get',
-      path: '/list',
-      handler: this.userController.getAllUsers,
+      path: '/:id',
+      handler: this.userController.getById,
       bindTo: this.userController
     }];
   }

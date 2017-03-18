@@ -10,12 +10,13 @@ class UserController {
   }
 
   public get(req: Request, res: Response) {
-    Promise.resolve(this.userService.get())
+    Promise.resolve(this.userService.getAll())
       .then(res.send.bind(res));
   }
 
-  public getAllUsers(req: Request, res: Response) {
-    Promise.resolve(this.userService.getAllUsers())
+  public getById(req: Request, res: Response) {
+    const {id} = req.params;
+    Promise.resolve(this.userService.getById(id))
       .then(res.send.bind(res));
   }
 }
