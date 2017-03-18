@@ -1,8 +1,12 @@
 import * as http from 'http';
 import * as debug from 'debug';
-import * as mongoose from 'mongoose';
 
 import app from './server';
+import mongoose from './mongoose';
+
+const MONGO_URI: string = 'mongodb://localhost:27017/test';
+
+mongoose.connect(MONGO_URI);
 
 debug('ts-express:server');
 

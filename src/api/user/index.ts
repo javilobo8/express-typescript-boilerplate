@@ -1,11 +1,9 @@
 import {Request, Response} from 'express';
 
-import {
-  User as UserModel
-} from '../../models';
-
 import UserService from './UserService';
 import UserController from './UserController';
+
+import models from '../../mongoose';
 
 class UserRouter {
   public userController: UserController;
@@ -27,8 +25,8 @@ class UserRouter {
   }
 }
 
-const userService = new UserService(UserModel);
+const userService = new UserService(models.User);
 const userController = new UserController(userService);
-const router = new UserRouter(userController);
+const userRouter = new UserRouter(userController);
 
-export default router.routes;
+export default userRouter.routes;

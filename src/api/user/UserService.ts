@@ -1,23 +1,22 @@
 import * as Promise from 'bluebird';
 import {Model} from 'mongoose';
-import {IUser} from '../../models/schemas/user';
+import {IUserModel} from '../../models/IUserModel';
 
 class UserService {
-  private userModel: Model<IUser>;
+  private userModel: Model<IUserModel>;
 
-  constructor(userModel: Model<IUser>) {
+  constructor(userModel: Model<IUserModel>) {
     this.userModel = userModel;
   }
 
-  public get(): Promise<IUser[]> {
+  public getAll(): Promise<IUserModel[]> {
     const query = this.userModel.find({});
     return Promise.resolve(query.exec());
   }
 
-  public getAllUsers(): Promise<object> {
-    return Promise.resolve({
-      test: 'ok!'
-    });
+  public getById(id: string): Promise<IUserModel>{
+    const query = this.userModel.findById(id);
+    return Promise.resolve(query.exec());
   }
 }
 

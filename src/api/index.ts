@@ -3,9 +3,9 @@ import {Router, Application} from 'express';
 import userRoutes from './user';
 
 interface IRoute {
-  method: string;
-  path: string;
-  middlewares?: Array<object>;
+  readonly method: string;
+  readonly path: string;
+  readonly middlewares?: Array<object>;
   handler();
   bindTo();
 }
