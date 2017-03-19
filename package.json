@@ -20,6 +20,7 @@
   "author": "javilobo8",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^1.0.0",
     "@types/bluebird": "^3.5.0",
     "@types/body-parser": "^1.16.0",
     "@types/chai": "^3.4.35",
@@ -45,6 +46,7 @@
     "typescript": "^2.2.1"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "chalk": "^1.1.3",

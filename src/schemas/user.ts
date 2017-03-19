@@ -2,11 +2,16 @@ import * as mongoose from 'mongoose';
 import {IUserModel} from '../models/IUserModel';
 
 const UserSchema: mongoose.Schema = new mongoose.Schema({
-  createdAt: Date,
+  username: {type: String, unique: true},
+  password: String,
   email: String,
   firstName: String,
-  lastName: String
+  lastName: String,
+  createdAt: Date
+}, {
+  versionKey: false
 });
+
 UserSchema.pre('save', function(next) {
   if (!this.createdAt) {
     this.createdAt = new Date();

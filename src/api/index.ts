@@ -1,6 +1,7 @@
 import {Router, Application} from 'express';
 
 import userRoutes from './user';
+import loginRoutes from './login';
 
 interface IRoute {
   readonly method: string;
@@ -14,6 +15,7 @@ class ApiRouter {
   private express: Application;
 
   constructor(express) {
+    express.use('/login', this.createRouter(loginRoutes));
     express.use('/user', this.createRouter(userRoutes));
   }
 
