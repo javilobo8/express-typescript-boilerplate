@@ -26,24 +26,24 @@ class Models {
     if (!_.isNil(options) && !_.isPlainObject(options)) {
       throw new Error('The `options` argument must be an object');
     }
-    this.mongooseConnect(mongoose, uri, options);
+    this.mongooseConnect(uri, options);
     return this;
   }
 
-  mongooseConnect(_mongoose, uri, options) {
-    _mongoose.connect(uri, options);
-    _mongoose.connection.once('connected', () => {
+  mongooseConnect(uri: string, options: object = {}) {
+    mongoose.connect(uri, options);
+    mongoose.connection.once('connected', () => {
       console.log('[models] Mongoose connected');
     });
-    _mongoose.connection.once('error', (err) => {
+    mongoose.connection.once('error', (err) => {
       console.log('[models] Mongoose error: ', err);
       throw err;
     });
-    _mongoose.connection.once('disconnected', () => {
+    mongoose.connection.once('disconnected', () => {
       console.log('[models] Mongoose disconnected');
     });
     process.once('SIGINT', () =>
-      _mongoose.connection.close(() => {
+      mongoose.connection.close(() => {
         console.error('[models] Mongoose disconnected');
         process.exit(0);
       })
