@@ -1,24 +1,28 @@
 import * as http from 'http';
 import * as debug from 'debug';
 
-import app from './server';
+import config from './config';
+import db from './config/db';
+
+import Server from './server';
 import mongoose from './mongoose';
-
-const MONGO_URI: string = 'mongodb://localhost:27017/test';
-
-mongoose.connect(MONGO_URI);
 
 debug('ts-express:server');
 
-const PORT = normalizePort(process.env.PORT || 3000);
-app.set('port', PORT);
+db(config);
 
-const server = http.createServer(app);
+const PORT = normalizePort(process.env.PORT || 3000);
+
+const srv = new Server(config);
+
+srv.express.set('port', PORT);
+
+const server = http.createServer(srv.express);
 server.listen(PORT);
 server.on('error', onError);
 server.on('listening', onListening);
 
-function normalizePort(val: number|string): number|string|boolean {
+function normalizePort(val: number | string): number | string | boolean {
   let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
   if (isNaN(port)) {
     return val;
@@ -32,7 +36,7 @@ function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== 'listen') {
     throw error;
   }
-  let bind = (typeof PORT === 'string') ? 'Pipe ' + PORT : 'Port ' + PORT;
+  let bind = (typeof PORT === 'string') ? `Pipe ${PORT}` : `Port ${PORT}`;
   switch(error.code) {
     case 'EACCES':
       console.error(`${bind} requires elevated privileges`);
